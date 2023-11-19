@@ -5,7 +5,7 @@ This project is created for the university class named Digital Image Processing 
 ## General
 The term "dynamic range" is a dimensionless quantity that can be used for different physical measures. For images, it is the ratio between the brightest and darkest pixel. For a display, the dynamic range is the ratio of the maximum and minimum brightness it can emit. The dynamic range of a camera is the ratio of the sensor's saturation brightness ('clipping') and the brightness that raises the camera's response slightly above the noise level. In the following image LDR (left) is compared to HDR (right).
 
-![Comparing LDR to HDR image][/images/compare.png]
+![Comparing LDR to HDR image](/images/compare.png)
 
 People, by their nature, can perceive a wide dynamic range in a scene. Cameras, on the other hand, have a low dynamic range (LDR), and to capture the detail that our eyes can see in a photograph, we need to take multiple exposures and combine them to create a high dynamic range (HDR) image.
 
@@ -33,11 +33,11 @@ In what follows, each color channel is treated separately and is not included in
 
 The integer value of brightness Zkij for a pixel {i, j} in the image with exposure time index k is related to the unknown and desired quantity of scene radiation ij according to the following relationship:
 
-![Equation 0][/images/equation0.png]
+![Equation 0](/images/equation0.png)
 
 where f is generally a non-linear function that characterizes the image sensor's response, and we call it the camera response curve. If we knew the inverse function f −1(Zkij ) = tkEij , then we could convert the brightness values Zkij to the desired radiation values as a simple multiplication by a constant, given that we know the exposure times. Instead of f −1, we will consider the function g := lnf −1, which maps the pixel values Zkij to radiation values as follows:
 
-![Equation 1][/images/equation1.png]
+![Equation 1](/images/equation1.png)
 
 For robustness and for recovering high dynamic range radiation values, we should use all available exposure times for a specific pixel to estimate its radiation based on equation 2. For this purpose, we can use a weighting function, w(z), to give higher weight to exposures where the pixel value is closer to the center of the dynamic range and not close to saturation or noisy underexposure:
 
@@ -45,11 +45,11 @@ For robustness and for recovering high dynamic range radiation values, we should
 
 There are many possible choices for the weighting function. You will implement the following four:
 
-![Equation 3][/images/equation3.png]
+![Equation 3](/images/equation3.png)
 
 All of the weighting functions above assume that the intensity values are in the range z∈[0,1]. Make sure to normalize your LDR images to this range (e.g., divide by 255, etc.). You can experiment with different clipping values Zmin and Zmax, but we recommend Zmin = 0.01, Zmax = 0.99. Unlike the other schemes, the weights wphoton also depend on the exposure time under which a pixel was captured. Apply all of the above weighting schemes and use them to create HDR images.
 
-![Linear camera response curve with saturation][/images/plot.png]
+![Linear camera response curve with saturation](/images/plot.png)
 
 In the 1st section of the assignment, we will consider a linear camera response curve with saturation. Specifically, assume that in the linear region, it is the identity function f(x) = x. Implement the mergeLDRStack routine, which takes as input a list of K monochromatic images taken at different exposure times and dimensions M × N × 1 each, as well as the corresponding exposure times tk. It returns the radiance map estimated from the HDR rendering through weighted merging of the images. More specifically:
 
